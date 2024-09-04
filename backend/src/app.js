@@ -9,7 +9,7 @@ app.use(express.json());
 
 // Utiliza el router de usuarios para las rutas que comienzan con /api/usuarios
 app.use('/api/usuarios', usuarioRouter,dispositivoRouter);
-
+app.use('/api/dispositivos',dispositivoRouter);
 // Inicia el servidor
 app.listen(port, () => {
   console.log(`Servidor escuchando en el puerto ${port}`);
