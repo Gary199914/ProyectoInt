@@ -10,7 +10,7 @@ const PantallaUsuarios = () => {
     const fetchUsuarios = async () => {
       try {
         const response = await axios.get('http://10.0.2.2:3000/api/usuarios/usuarios');
-        console.log('Usuarios:', response.data); // Log para depuración
+        console.log('Usuarios:', response.data); 
         setUsuarios(response.data);
       } catch (error) {
         console.error('Error al cargar usuarios:', error.response ? error.response.data : error.message);
