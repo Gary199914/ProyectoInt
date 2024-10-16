@@ -112,23 +112,3 @@ void setup() {
   connectToWifi();
 }
 
-void loop() {
-  
-  potencia = analogRead(sensorPin);
-  potencia = map(potencia, 0, 4095, 0, 100);
-  unsigned long currentMillis = millis();
-  //if (valAnterior != potencia) {
-  if (currentMillis - previousMillis >= interval) {
-  previousMillis = currentMillis;
-    
-    //potencia = random(1, 100);
-    Serial.println();
-    Serial.printf("potencia = %.2f kW/h \n", potencia);
-    
-    uint16_t packetIdPub1 = mqttClient.publish(MQTT_PUB_POT, 1, true, String(potencia).c_str());
-    Serial.printf("Publicando datos en el canal %s con QoS 1, packetId: %i ", MQTT_PUB_POT, packetIdPub1);
-    Serial.printf("Valor: %.2f \n", potencia);
-    valAnterior = potencia;
-    delay(250);
-  }
-}
