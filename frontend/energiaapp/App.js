@@ -1,69 +1,25 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import Paho from "paho-mqtt";
 
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
+import { useState, useEffect } from "react";
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, Button, View, TouchableOpacity } from 'react-native';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
-function Section({children, title}) {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 20,
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    borderRadius: 8,
-    backgroundColor: '#f0f0f5',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  sectionDescription: {
-    fontSize: 16,
-    fontWeight: '400',
-    lineHeight: 24,
-    textAlign: 'justify',
-  },
-});
+const MQTT_PUB_POT = "EnchufeSmart/hab01/potencia";
+const MQTT_CONTROL = "EnchufeSmart/hab01/control";
 
-export default Section;
+
+client = new Paho.Client(
+  "broker.hivemq.com",
+  Number(8000),
+  `mqtt-async-test-${parseInt(Math.random() * 100)}`
+);
+
+export default function App() {
+
+  const [potencia, setPotencia] = useState(0);
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    // Simulación de actualización del valor
